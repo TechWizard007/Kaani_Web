@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Hub - KaAni Web</title>
+    <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+    <header class="header">
+        <div class="container">
+            <div class="logo" aria-label="KaAni Web">
+                <img class="brand-logo" src="logo (2).png" alt="KaAni Web logo" width="48" height="48" loading="lazy" decoding="async">
+                <span class="logo-text">KaAni Web</span>
+            </div>
+            <nav class="nav">
+                <a href="Home.html" class="nav-link">Home</a>
+                <a href="learning.html" class="nav-link active">Learning Hub</a>
+                <a href="sustainability.html" class="nav-link">Sustainability</a>
+                <a href="legal.html" class="nav-link">Legal Guide</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="section" id="learning" style="min-height: calc(100vh - 140px); padding-top: 120px;">
+        <div class="container">
+            <h2 class="challenges-title">Fisheries Learning Hub</h2>
+            <p class="challenges-subtitle">Access comprehensive learning modules, interactive quizzes, and educational resources for sustainable agriculture and fisheries.</p>
+
+            <!-- Tab Navigation -->
+            <div class="tabs-container" style="max-width: 1200px; margin: 40px auto;">
+                <div class="tabs-nav" style="display: flex; gap: 10px; border-bottom: 2px solid rgba(22, 101, 52, 0.15); margin-bottom: 30px;">
+                    <button class="tab-btn active" data-tab="browse" style="padding: 12px 24px; background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; font-size: 1.1rem; font-weight: 600; color: #2c3e50; transition: all 0.3s;">
+                        📚 Browse Modules
+                    </button>
+                    <button class="tab-btn" data-tab="upload" style="padding: 12px 24px; background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; font-size: 1.1rem; font-weight: 600; color: #2c3e50; transition: all 0.3s;">
+                        ⬆️ Upload Module (Admin)
+                    </button>
+                </div>
+
+                <!-- Browse Modules Tab -->
+                <div id="browse-tab" class="tab-content active" style="display: block;">
+                    <div id="modules-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px;">
+                        <div style="text-align: center; padding: 40px; color: #666;">
+                            <div class="spinner" style="display: inline-block; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #4caf50; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;"></div>
+                            <p>Loading modules...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upload Module Tab -->
+                <div id="upload-tab" class="tab-content" style="display: none;">
+                    <div class="challenge-card" style="max-width: 800px; margin: 0 auto;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h3 style="font-size: 1.8rem; color: #133c21; margin: 0;">Upload New Module</h3>
+                            <div id="auth-status" style="font-size: 0.9rem; padding: 6px 12px; border-radius: 20px; background: #fff3cd; color: #856404;">
+                                <span id="auth-status-text">Not logged in</span>
+                            </div>
+                        </div>
+                        <div id="login-prompt" style="padding: 20px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; margin-bottom: 20px; display: none;">
+                            <p style="margin: 0 0 10px 0; color: #856404;"><strong>⚠️ Admin Access Required</strong></p>
+                            <p style="margin: 0 0 15px 0; color: #856404;">You need to be logged in as an admin to upload modules.</p>
+                            <a href="http://localhost:3000/login" target="_blank" style="display: inline-block; padding: 10px 20px; background: #4caf50; color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">
+                                Go to Login Page →
+                            </a>
+                        </div>
+                        <form id="upload-form" style="display: flex; flex-direction: column; gap: 20px;">
+                            <div>
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #133c21;">Module Title *</label>
+                                <input type="text" id="module-title" required style="width: 100%; padding: 12px; border: 1px solid rgba(22, 101, 52, 0.25); border-radius: 8px; font-size: 1rem;" placeholder="e.g., Introduction to Sustainable Fishing">
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #133c21;">Description *</label>
+                                <textarea id="module-description" required rows="4" style="width: 100%; padding: 12px; border: 1px solid rgba(22, 101, 52, 0.25); border-radius: 8px; font-size: 1rem; resize: vertical;" placeholder="Provide a detailed description of the module..."></textarea>
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #133c21;">Content Type</label>
+                                <select id="module-type" style="width: 100%; padding: 12px; border: 1px solid rgba(22, 101, 52, 0.25); border-radius: 8px; font-size: 1rem;">
+                                    <option value="text">Text Only</option>
+                                    <option value="pdf">PDF Document</option>
+                                    <option value="video">Video</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #133c21;">Upload File (Optional for text-only)</label>
+                                <input type="file" id="module-file" accept=".pdf,.mp4,.mov,.avi" style="width: 100%; padding: 12px; border: 1px solid rgba(22, 101, 52, 0.25); border-radius: 8px; font-size: 1rem;">
+                                <small style="color: #666; margin-top: 5px; display: block;">Supported: PDF, MP4, MOV, AVI (Max 10MB)</small>
+                            </div>
+                            <div id="upload-message" style="display: none; padding: 12px; border-radius: 8px; margin-top: 10px;"></div>
+                            <button type="submit" style="padding: 14px 32px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; align-self: flex-start;">
+                                Upload Module
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .tab-btn.active {
+            color: #164e27 !important;
+            border-bottom-color: #4caf50 !important;
+        }
+        .tab-content {
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .module-card {
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(22, 101, 52, 0.15);
+            border-radius: 12px;
+            padding: 22px;
+            transition: all 0.3s;
+        }
+        .module-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.10);
+        }
+        .module-card h3 {
+            font-size: 1.4rem;
+            color: #133c21;
+            margin-bottom: 10px;
+        }
+        .module-card p {
+            color: #2f4b3a;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .module-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .download-btn {
+            padding: 8px 16px;
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        .download-btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+        .download-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+
+    <footer class="section" id="site-footer">
+        <div class="footer-bottom">
+            <div class="container">
+                <p>© 2024 KaAni Web. All rights reserved. Empowering sustainable agriculture and fisheries.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="learning-hub.js"></script>
+    </body>
+    </html>
+
+
